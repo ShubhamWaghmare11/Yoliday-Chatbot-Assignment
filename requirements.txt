@@ -9,4 +9,5 @@ pytest-mock
 httpx
 langchain
 langchain-groq
+supabase
 groq
