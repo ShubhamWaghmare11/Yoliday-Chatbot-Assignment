@@ -14,10 +14,11 @@ A simple chat app that takes your questions and gives you two answers — one ca
 
 ```bash
 .
+├── .env                # Environment variables (local only, not committed)
 ├── backend.py         # FastAPI app
 ├── app.py              # Streamlit frontend
 ├── db/
-│   └── database.py     #Setting up database
+|   └── database.py     #Setting up database
 │   └── crud.py         # Supabase operations
 ├── utils/
 │   └── prompts.py     # Prompt builders
@@ -52,7 +53,7 @@ User queries and AI-generated responses are stored in a Supabase PostgreSQL data
 
 The backend is built with FastAPI, offering endpoints to generate responses and fetch chat history. The database layer is abstracted with CRUD operations, which interact with Supabase through its Python client.
 
-various tests using pytest verifies prompt building, API endpoint correctness, and database interaction (using mocks), ensuring reliability and maintainability.
+Various tests using pytest verify prompt building, API endpoint correctness, and database interaction (using mocks), ensuring reliability and maintainability.
 
 
 
