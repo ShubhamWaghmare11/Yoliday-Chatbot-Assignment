@@ -18,7 +18,7 @@ A simple chat app that takes your questions and gives you two answers — one ca
 ├── backend.py         # FastAPI app
 ├── app.py              # Streamlit frontend
 ├── db/
-|   └── database.py     #Setting up database
+│   └── database.py     #Setting up database
 │   └── crud.py         # Supabase operations
 ├── utils/
 │   └── prompts.py     # Prompt builders
