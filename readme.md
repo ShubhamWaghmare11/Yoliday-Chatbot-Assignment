@@ -6,8 +6,10 @@ A simple chat app that takes your questions and gives you two answers — one ca
 
 ## Live Demo
 
-🔗 [Add your hosted app link here]  
-*(If you haven't hosted it yet, you can remove this section or mention it’s local only)*
+🔗  https://yoliday-chatbot-assignment.streamlit.app/
+
+Upon launching, the app will prompt you to enter a user_id and GROQ API KEY. You can enter any value for user_id to sign up.
+To get your GROQ API KEY, visit: https://console.groq.com/keys
 
 ---
 ## 📁 Folder Structure
