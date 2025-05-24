@@ -18,6 +18,22 @@ app = FastAPI()
 
 
 def extract_json(text: str) -> dict:
+    """
+    Cleans and parses a string containing JSON content.
+
+    This function removes Markdown-style code block wrappers (e.g., ```json)
+    and converts the remaining string into a Python dictionary.
+
+    Args:
+        text (str): The raw string response from the model containing JSON.
+
+    Returns:
+        dict: Parsed JSON content as a dictionary.
+
+    Raises:
+        ValueError: If the string does not contain valid JSON.
+    """
+
     try:
         cleaned = re.sub(r"^```json|```$", "", text.strip(), flags=re.MULTILINE).strip()
         return json.loads(cleaned)
@@ -27,6 +43,24 @@ def extract_json(text: str) -> dict:
 
 @app.post("/generate")
 def generate(user_input: getInput):
+    """
+    Generates AI responses (casual and formal) for a user-provided query.
+
+    This endpoint accepts a query and a GROQ API key, invokes the ChatGroq
+    model to generate and refine responses, and stores the interaction in the database.
+
+    Args:
+        user_input (getInput): Pydantic model containing `user_id`, `query`, and `groq_api_key`.
+
+    Returns:
+        dict: JSON response containing the AI-generated `casual_response` and `formal_response`.
+
+    Raises:
+        HTTPException: 
+            - 401 if authentication with Groq fails.
+            - 500 for any other unexpected errors.
+    """
+
     try:
         model = ChatGroq(model_name='Gemma2-9b-It', api_key=user_input.groq_api_key)
         prompt = build_prompt(user_input.query)
@@ -52,6 +86,23 @@ def generate(user_input: getInput):
 
 @app.get("/history")
 def history(user_id: str):
+    """
+    Retrieves chat history for a specific user.
+
+    This endpoint returns all past queries and responses associated with the given user,
+    ordered by the most recent first.
+
+    Args:
+        user_id (str): The unique identifier for the user.
+
+    Returns:
+        dict: A dictionary containing a list of past chat records under the key `"output"`.
+
+    Raises:
+        HTTPException: 
+            - 500 if the database query fails.
+    """
+
     try:
         history = crud.get_history(user_id) 
         print(history)   

@@ -133,8 +133,8 @@ if "selected_history" in st.session_state:
 # Load and display history logic
 def load_history():
     try:
-        print(f"http://localhost:8000/history?user_id={st.session_state.user_id}")
-        response = requests.get(f"http://localhost:8000/history?user_id={st.session_state.user_id}")
+        print(f"https://yoliday-chatbot-assignment.onrender.com/history?user_id={st.session_state.user_id}")
+        response = requests.get(f"https://yoliday-chatbot-assignment.onrender.com/history?user_id={st.session_state.user_id}")
         print(response)
         print("RESPONSE: ",response.json())
         data = response.json()
@@ -196,7 +196,7 @@ elif st.session_state.awaiting_response:
         print(payload)
 
         try:
-            response = requests.post("http://localhost:8000/generate", json=payload)
+            response = requests.post("https://yoliday-chatbot-assignment.onrender.com/generate", json=payload)
             response.raise_for_status()
             data = response.json()
             print("DATA: ",data)
@@ -243,7 +243,7 @@ def parse_date_isoformat(date_str):
 # Retrieving previous chats of user
 def set_selected_history(index):
     try:
-        response = requests.get(f"http://localhost:8000/history?user_id={st.session_state.user_id}")
+        response = requests.get(f"https://yoliday-chatbot-assignment.onrender.com/history?user_id={st.session_state.user_id}")
         response.raise_for_status()
         all_chats = response.json()
         selected=all_chats['output'][index]
