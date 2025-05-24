@@ -16,11 +16,17 @@ import streamlit as st
 import requests
 from datetime import datetime
 import time
+import re
 
 
 
 # Page setup
 st.set_page_config(initial_sidebar_state="collapsed")
+
+def is_valid_user_id(user_id):
+    pattern = r'^[a-zA-Z][a-zA-Z0-9_-]*$'
+    return re.match(pattern, user_id) is not None
+
 
 # Authentication Form (if session not set)
 if "user_id" not in st.session_state:
@@ -42,6 +48,8 @@ if "user_id" not in st.session_state:
         if submitted:
             if not user_id_input.strip():
                 st.warning("User ID cannot be empty.")
+            elif not is_valid_user_id(user_id_input.strip()):
+                st.warning("User ID can only contain letters, numbers, underscores, or hyphens. And must start with a letter")
             elif not groq_api_key_input.strip():
                 st.warning("GROQ API Key cannot be empty.")
             else:
