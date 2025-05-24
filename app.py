@@ -277,29 +277,29 @@ with st.sidebar:
 
     
 
+    # Get indices for today's chats
+    today_indices = [idx for idx, chat in enumerate(st.session_state.chat_history) if parse_date_isoformat(chat['created_at']).date() == datetime.today().date()]
+
+    # Get indices for older chats
+    older_indices = [idx for idx, chat in enumerate(st.session_state.chat_history) if parse_date_isoformat(chat['created_at']).date() != datetime.today().date()]
+
     st.markdown('<h3>Today</h3>', unsafe_allow_html=True)
-    for i, chat in enumerate(st.session_state.chat_history):
-        try:
-            if parse_date_isoformat(chat['created_at']).date() == datetime.today().date():
-                st.button(
-                    chat["query"],
-                    key=f"history_{i}",
-                    on_click=set_selected_history,
-                    args=(i,)
-                )
-        except Exception as e:
-            st.error(f"Invalid date format: {e}")
+    for idx in today_indices:
+        chat = st.session_state.chat_history[idx]
+        st.button(
+            chat["query"],
+            key=f"history_{idx}",
+            on_click=set_selected_history,
+            args=(idx,)
+        )
 
     st.markdown('<h3>Older Chats</h3>', unsafe_allow_html=True)
-    for i, chat in enumerate(st.session_state.chat_history):
-        try:
-            if parse_date_isoformat(chat['created_at']).date() != datetime.today().date():
-                st.button(
-                    chat["query"],
-                    key=f"history_{i}_old",
-                    on_click=set_selected_history,
-                    args=(i,)
-                )
-        except Exception as e:
-            st.error(f"Invalid date format: {e}")
+    for idx in older_indices:
+        chat = st.session_state.chat_history[idx]
+        st.button(
+            chat["query"],
+            key=f"history_{idx}_old",
+            on_click=set_selected_history,
+            args=(idx,)
+        )
 
