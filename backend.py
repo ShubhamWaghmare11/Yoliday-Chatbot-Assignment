@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response, Request
 from dotenv import load_dotenv
 import json
 from langchain_groq import ChatGroq
@@ -113,6 +113,8 @@ def history(user_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/health")
-def health():
+@app.api_route("/health", methods=["GET", "HEAD"])
+def health(request: Request):
+    if request.method == "HEAD":
+        return Response(status_code=200)
     return {"status": "ok"}
